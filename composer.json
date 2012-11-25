@@ -1,4 +1,5 @@
 {
+    "name": "meanbee/testrig",
     "autoload": {
         "psr-0": {"Meanbee": "lib/"}
     },
