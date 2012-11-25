@@ -1,37 +1,12 @@
 <?php
 require "../vendor/autoload.php";
 
-$opts = new \Commando\Command();
+$cli = new \Meanbee\Testrig\Cli();
 
-$opts->option('name')
-    ->required()
-    ->aka('n')
-    ->describedAs('Project name');
+$opts = $cli->getOptions();
 
-$opts->option('dir')
-    ->required()
-    ->aka('d')
-    ->describedAs('Project directory');
-
-$opts->option('url')
-    ->required()
-    ->aka('u')
-    ->describedAs('Project directory');
-
-$opts->option('version')
-    ->required()
-    ->aka('v')
-    ->describedAs('Magento version to install');
-
-$opts->option('db_user')
-    ->required()
-    ->describedAs('Database username');
-
-$opts->option('db_pass')
-    ->required()
-    ->describedAs('Database password');
-
-$installer = new \Meanbee\Testrig\CommandSet\Magento17(array(
+$installer_class = $cli->getAllowedMagentoVersions()[$opts['version']];
+$installer = new $installer_class(array(
     'base_url'     => $opts['url'],
     'project_name' => $opts['name'],
     'project_dir'  => $opts['dir'],
