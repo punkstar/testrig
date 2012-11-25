@@ -1,5 +1,16 @@
 {
     "name": "meanbee/testrig",
+    "description": "Magento installation automation",
+    "keywords": ["magento"],
+    "authors": [
+        {
+            "name": "Nick Jones",
+            "email": "nick@nicksays.co.uk",
+            "homepage": "http://www.nicksays.co.uk",
+            "role": "Developer"
+        }
+    ],
+    "version": "0.0.1",
     "autoload": {
         "psr-0": {"Meanbee": "lib/"}
     },
