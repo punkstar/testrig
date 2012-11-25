@@ -5,10 +5,14 @@ namespace Meanbee\Testrig\Command;
 class MagentoInstall extends Base {
     protected $_directory = null;
 
-    public function __construct($directory, $description = null) {
+    public function __construct($directory, $db_name, $db_user, $db_pass, $base_url, $description = null) {
         parent::__construct();
 
         $this->_directory = $directory;
+        $this->_dbname = $db_name;
+        $this->_dbuser = $db_user;
+        $this->_dbpass = $db_pass;
+        $this->_baseurl = $base_url;
 
         if (null == $description) {
             $this->_description = "Installing Magento";
@@ -28,11 +32,11 @@ class MagentoInstall extends Base {
             'timezone' => 'UTC',
             'default_currency' => 'GBP',
             'db_host' => 'localhost',
-            'db_name' => 'test_shippingrules_1702',
-            'db_user' => 'root',
-            'db_pass' => 'toor',
-            'url' => 'http://bartley.local:8888/test/shippingrules/1.7/',
-            'secure_base_url' => 'http://bartley.local:8888/test/shippingrules/1.7/',
+            'db_name' => $this->_dbname,
+            'db_user' => $this->_dbuser,
+            'db_pass' => $this->_dbpass,
+            'url' => $this->_baseurl,
+            'secure_base_url' => $this->_baseurl,
             'use_rewrites' => 0,
             'use_secure' => 0,
             'use_secure_admin' => 1,
