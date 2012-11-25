@@ -15,6 +15,10 @@ class Magento1702 extends Magento {
         return $this->_getOpt('project_dir') . DIRECTORY_SEPARATOR . $this->_getCleanVersion();
     }
 
+    public function getBaseUrl() {
+        return $this->_getOpt('base_url') . '/' . $this->_getCleanVersion();
+    }
+
     public function getCommands() {
         $temporary_directory = $this->_getTemporaryDirectory();
         $temporary_gz_file = sprintf("%s/%s.tar.gz", $temporary_directory, $this->getVersion());
@@ -27,7 +31,7 @@ class Magento1702 extends Magento {
         $db_user = $this->_getOpt('db_user');
         $db_pass = $this->_getOpt('db_pass');
 
-        $base_url = $this->_getOpt('base_url');
+        $base_url = $this->getBaseUrl();
 
         return array(
             new \Meanbee\Testrig\Command\Mkdir($temporary_directory, 'Making a temporary directory'),
