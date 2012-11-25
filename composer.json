@@ -5,6 +5,7 @@
     },
     "require": {
         "php": ">=5.3.0",
-        "nategood/commando": "*"
+        "nategood/commando": "*",
+        "kevinlebrun/colors.php": "0.2.*"
     }
 }
