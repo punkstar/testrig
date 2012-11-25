@@ -1,16 +1,42 @@
 <?php
 require "../vendor/autoload.php";
 
-$project_name = 'shippingrules';
-$project_dir = '/Users/nrj/Sites/test/' . $project_name . '/1.7';
-$project_tempdir = '/Users/nrj/Sites/test/' . $project_name . '/1.7_temp';
+$opts = new \Commando\Command();
+
+$opts->option('name')
+    ->required()
+    ->aka('n')
+    ->describedAs('Project name');
+
+$opts->option('dir')
+    ->required()
+    ->aka('d')
+    ->describedAs('Project directory');
+
+$opts->option('url')
+    ->required()
+    ->aka('u')
+    ->describedAs('Project directory');
+
+$opts->option('version')
+    ->required()
+    ->aka('v')
+    ->describedAs('Magento version to install');
+
+$opts->option('db_user')
+    ->required()
+    ->describedAs('Database username');
+
+$opts->option('db_pass')
+    ->required()
+    ->describedAs('Database password');
 
 $installer = new \Meanbee\Testrig\CommandSet\Magento17(array(
-    'base_url' => 'http://bartley.local:8888/test/shippingrules',
-    'project_name' => 'shippingrules',
-    'project_dir'  => '/Users/nrj/Sites/test/shippingrules',
-    'db_user'  => 'root',
-    'db_pass'  => 'toor',
+    'base_url'     => $opts['url'],
+    'project_name' => $opts['name'],
+    'project_dir'  => $opts['dir'],
+    'db_user'      => $opts['db_user'],
+    'db_pass'      => $opts['db_pass'],
 ));
 
 $installer->run();
