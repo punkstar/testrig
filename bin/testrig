@@ -1,0 +1,28 @@
+<?php
+require "../vendor/autoload.php";
+
+$project_name = 'shippingrules';
+$project_dir = '/Users/nrj/Sites/test/' . $project_name . '/1.7';
+$project_tempdir = '/Users/nrj/Sites/test/' . $project_name . '/1.7_temp';
+
+$commands = array(
+    new \Meanbee\Testrig\Command\Mkdir('/Users/nrj/Sites/test/', 'Making a temporary directory'),
+    new \Meanbee\Testrig\Command\Fetch('http://bartley.local:8888/share/magento-1.7.0.2.tar.gz', '/Users/nrj/Sites/test/magento-1.7.0.2.tar.gz', 'Fetching Magento 1.7.0.2'),
+
+    new \Meanbee\Testrig\Command\Mkdir($project_tempdir, 'Making temporary project directory'),
+    new \Meanbee\Testrig\Command\Gunzip('/Users/nrj/Sites/test/magento-1.7.0.2.tar.gz', $project_tempdir, 'Decompressing'),
+
+    new \Meanbee\Testrig\Command\Mkdir($project_dir, 'Making project directory'),
+    new \Meanbee\Testrig\Command\Move($project_tempdir . '/magento/*', $project_dir, 'Moving to correct place'),
+    new \Meanbee\Testrig\Command\Move($project_tempdir . '/magento/.htaccess*', $project_dir, 'Moving to correct place (dot files)'),
+
+    new \Meanbee\Testrig\Command\MakeDB('test_' . $project_name . '_1702', 'root', 'toor'),
+
+    new \Meanbee\Testrig\Command\Raw("chmod -R 0777 $project_dir/media $project_dir/app/etc $project_dir/var", "Setting correct directory permissions"),
+
+    new Meanbee\Testrig\Command\MagentoInstall($project_dir)
+);
+
+foreach ($commands as $command) {
+    $command->run();
+}
