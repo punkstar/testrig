@@ -131,10 +131,10 @@ abstract class Magento {
             $commands[] = new \Meanbee\Testrig\Command\Raw("cd $project_directory && modman init", "Initialising modman");
 
             foreach ($extensions as $extension) {
-                $commands[] = new \Meanbee\Testrig\Command\Raw("cd $project_directory && modman clone $extension", "Cloning $extension");
+                $commands[] = new \Meanbee\Testrig\Command\Raw("cd $project_directory && modman clone $extension", "Cloning $extension to modman directory");
             }
 
-            $commands[] = new \Meanbee\Testrig\Command\Raw("cd $project_directory && modman deploy-all", "Cloning $extension");
+            $commands[] = new \Meanbee\Testrig\Command\Raw("cd $project_directory && modman deploy-all", "Deploying all modman extensions");
         }
 
         return $commands;
