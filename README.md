@@ -17,11 +17,18 @@ Testrig is a tool for quickly setting up, potentially, multiple versions of Mage
 
 #### Composer
 
-    composer install meanbee/testrig
+    {
+        "require": {
+            "meanbee/testrig": "*"
+        }
+    }
+
 
 #### GIT
 
     git clone https://github.com/punkstar/testrig.git ~/testrig
+    cd ~/testrig
+    composer install
     alias testrig=~/testrig/bin/testrig
 
 ### Using testrig
