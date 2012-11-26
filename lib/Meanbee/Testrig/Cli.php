@@ -10,6 +10,8 @@ class Cli {
             '1.7.0.2' => '\Meanbee\Testrig\CommandSet\Magento1702',
             '1.6'     => '\Meanbee\Testrig\CommandSet\Magento16',
             '1.6.2.0' => '\Meanbee\Testrig\CommandSet\Magento1620',
+            '1.5'     => '\Meanbee\Testrig\CommandSet\Magento15',
+            '1.5.1.0' => '\Meanbee\Testrig\CommandSet\Magento1510'
         );
     }
 
