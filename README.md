@@ -15,21 +15,24 @@ Testrig is a tool for quickly setting up, potentially, multiple versions of Mage
 
 * PHP version 5.3.0+
 
+#### GIT
+
+The most common way, I'd imagine, of people installing `testrig` is by cloning a local copy.
+
+    git clone -b master https://github.com/punkstar/testrig.git ~/testrig
+    cd ~/testrig
+    composer install
+    echo "alias testrig=~/testrig/bin/testrig" >> ~/.zshrc
+
 #### Composer
+
+If you'd like to install `testrig` as a dependency of your project, then:
 
     {
         "require": {
             "meanbee/testrig": "*"
         }
     }
-
-
-#### GIT
-
-    git clone https://github.com/punkstar/testrig.git ~/testrig
-    cd ~/testrig
-    composer install
-    alias testrig=~/testrig/bin/testrig
 
 ### Using testrig
 
