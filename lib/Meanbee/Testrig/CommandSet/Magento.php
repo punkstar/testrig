@@ -92,6 +92,8 @@ abstract class Magento {
             new \Meanbee\Testrig\Command\Move($project_temp_directory . '/magento/*', $project_directory, 'Moving to correct place'),
             new \Meanbee\Testrig\Command\Move($project_temp_directory . '/magento/.htaccess*', $project_directory, 'Moving to correct place (dot files)'),
 
+            new \Meanbee\Testrig\Command\Raw("rmdir $project_temp_directory/magento $project_temp_directory", "Removing empty temporary directory"),
+
             new \Meanbee\Testrig\Command\MakeDB($db_name, $db_user, $db_pass),
 
             new \Meanbee\Testrig\Command\Raw("php -f $project_directory/install.php > /dev/null", "Touching install script (no idea why we need to do this)"),
