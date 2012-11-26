@@ -2,8 +2,8 @@
 
 namespace Meanbee\Testrig\CommandSet;
 
-class Magento1702 extends Magento {
+class Magento1620 extends Magento {
     public function getVersion() {
-        return "1.7.0.2";
+        return "1.6.2.0";
     }
 }
