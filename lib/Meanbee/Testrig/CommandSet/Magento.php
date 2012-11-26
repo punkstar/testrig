@@ -117,7 +117,7 @@ abstract class Magento {
         }
 
 
-        $commands[] = new \Meanbee\Testrig\Command\Raw("chmod -R 0777 $project_directory/*", "Setting correct directory permissions");
+        $commands[] = new \Meanbee\Testrig\Command\Raw("chmod -R o+w $project_directory/media $project_directory/var && chmod o+w $project_directory/app/etc", "Setting correct directory permissions");
         $commands[] = new \Meanbee\Testrig\Command\MagentoInstall(
             $project_directory,
             $db_name,
