@@ -75,6 +75,10 @@ Supported Magento versions: $supported_versions");
             ->required()
             ->describedAs('Database password');
 
+        $opts->option('sample')
+            ->describedAs('Install sample data')
+            ->boolean();
+
         return $opts;
     }
 }

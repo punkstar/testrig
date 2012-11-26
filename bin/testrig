@@ -19,6 +19,7 @@ foreach ($versions as $version) {
         'project_dir'  => $opts['dir'],
         'db_user'      => $opts['db_user'],
         'db_pass'      => $opts['db_pass'],
+        'sample'       => ($opts['sample']) ? true : false
     ));
 
     $installer->run();

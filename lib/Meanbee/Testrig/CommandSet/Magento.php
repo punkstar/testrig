@@ -14,6 +14,7 @@ abstract class Magento {
             'project_dir'  => '',
             'db_user'      => 'root',
             'db_pass'      => 'toor',
+            'sample'       => false
         ), $options);
 
         foreach ($required_keys as $key) {
@@ -79,7 +80,7 @@ abstract class Magento {
 
         $base_url = $this->getBaseUrl();
 
-        return array(
+        $commands = array(
             new \Meanbee\Testrig\Command\Mkdir($temporary_directory, 'Making a temporary directory'),
             new \Meanbee\Testrig\Command\Fetch($this->getUrl(), $temporary_gz_file, 'Fetching Magento ' . $this->getVersion()),
 
@@ -93,17 +94,36 @@ abstract class Magento {
             new \Meanbee\Testrig\Command\MakeDB($db_name, $db_user, $db_pass),
 
             new \Meanbee\Testrig\Command\Raw("php -f $project_directory/install.php > /dev/null", "Touching install script (no idea why we need to do this)"),
-
-            new \Meanbee\Testrig\Command\Raw("chmod -R 0777 $project_directory/*", "Setting correct directory permissions"),
-
-            new \Meanbee\Testrig\Command\MagentoInstall(
-                $project_directory,
-                $db_name,
-                $db_user,
-                $db_pass,
-                $base_url
-            )
         );
+
+        if ($this->_getOpt('sample')) {
+            $temporary_sample_file = sprintf("%s/sample.tar.gz", $temporary_directory);
+            $temporary_sample_dir = $temporary_directory . DIRECTORY_SEPARATOR . 'sample_data';
+
+            $commands[] = new \Meanbee\Testrig\Command\Fetch('http://www.magentocommerce.com/downloads/assets/1.6.1.0/magento-sample-data-1.6.1.0.tar.gz', $temporary_sample_file, 'Fetching sample data');
+            $commands[] = new \Meanbee\Testrig\Command\Mkdir($temporary_sample_dir, 'Making temporary sample data directory');
+            $commands[] = new \Meanbee\Testrig\Command\Gunzip($temporary_sample_file, $temporary_sample_dir, 'Decompressing sample data');
+
+            // Moving media directory
+            $temporary_sample_media_dir = $temporary_sample_dir . DIRECTORY_SEPARATOR . 'magento-sample-data-1.6.1.0' . DIRECTORY_SEPARATOR .  'media';
+            $commands[] = new \Meanbee\Testrig\Command\Move($temporary_sample_media_dir, $project_directory . DIRECTORY_SEPARATOR . 'media');
+
+            // Run SQL
+            $temporary_sample_file_sql = $temporary_sample_dir . DIRECTORY_SEPARATOR . 'magento-sample-data-1.6.1.0' . DIRECTORY_SEPARATOR . 'magento_sample_data_for_1.6.1.0.sql';
+            $commands[] = new \Meanbee\Testrig\Command\Raw(sprintf("mysql -u %s -p%s %s < %s", $db_user, $db_pass, $db_name, $temporary_sample_file_sql));
+        }
+
+
+        $commands[] = new \Meanbee\Testrig\Command\Raw("chmod -R 0777 $project_directory/*", "Setting correct directory permissions");
+        $commands[] = new \Meanbee\Testrig\Command\MagentoInstall(
+            $project_directory,
+            $db_name,
+            $db_user,
+            $db_pass,
+            $base_url
+        );
+
+        return $commands;
     }
 
     public function run() {
