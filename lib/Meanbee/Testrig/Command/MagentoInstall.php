@@ -42,7 +42,7 @@ class MagentoInstall extends Base {
             'use_secure_admin' => 1,
             'admin_firstname' => 'Nick',
             'admin_lastname' => 'Jones',
-            'admin_email' => 'nick.jones@meanbee.com',
+            'admin_email' => 'admin@localhost.com',
             'admin_username' => 'admin',
             'admin_password' => 'password1'
         );
