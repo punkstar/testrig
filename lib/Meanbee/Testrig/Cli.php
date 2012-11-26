@@ -40,9 +40,29 @@ Supported Magento versions: $supported_versions");
         $opts->option('version')
             ->required()
             ->aka('v')
-            ->describedAs('Magento version to install')
-            ->must(function ($version) {
-                return in_array($version, array_keys($this->getAllowedMagentoVersions()));
+            ->describedAs('Magento version to install (comma-separate multiple versions)')
+            ->must(function ($version_string) {
+                $versions = explode(',', $version_string);
+
+                foreach ($versions as $version) {
+                    $version = trim($version);
+
+                    if (!in_array($version, array_keys($this->getAllowedMagentoVersions()))) {
+                        return false;
+                    }
+                }
+
+                return true;
+            })
+            ->map(function ($version_string) {
+                $versions = explode(',', $version_string);
+                $versions_cleaned = array();
+
+                foreach ($versions as $version) {
+                    $versions_cleaned[] = trim($version);
+                }
+
+                return $versions_cleaned;
             });
 
         $opts->option('db_user')

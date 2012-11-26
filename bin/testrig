@@ -6,13 +6,20 @@ $cli = new \Meanbee\Testrig\Cli();
 
 $opts = $cli->getOptions();
 
-$installer_class = $cli->getAllowedMagentoVersions()[$opts['version']];
-$installer = new $installer_class(array(
-    'base_url'     => $opts['url'],
-    'project_name' => $opts['name'],
-    'project_dir'  => $opts['dir'],
-    'db_user'      => $opts['db_user'],
-    'db_pass'      => $opts['db_pass'],
-));
+$versions = $opts['version'];
+$allowed_versions = $cli->getAllowedMagentoVersions();
 
-$installer->run();
+foreach ($versions as $version) {
+    /** @var $installer_class \Meanbee\Testrig\CommandSet\Magento */
+    $installer_class = $allowed_versions[$version];
+
+    $installer = new $installer_class(array(
+        'base_url'     => $opts['url'],
+        'project_name' => $opts['name'],
+        'project_dir'  => $opts['dir'],
+        'db_user'      => $opts['db_user'],
+        'db_pass'      => $opts['db_pass'],
+    ));
+
+    $installer->run();
+}
