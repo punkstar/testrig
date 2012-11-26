@@ -79,6 +79,9 @@ Supported Magento versions: $supported_versions");
             ->describedAs('Install sample data')
             ->boolean();
 
+        $opts->argument()
+            ->describedAs('Modman compatible extension SCM source location, e.g. https://github.com/punkstar/magento_bundleddocs.git (you can add as many as you like!)');
+
         return $opts;
     }
 }

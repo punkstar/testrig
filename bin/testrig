@@ -9,6 +9,9 @@ $opts = $cli->getOptions();
 $versions = $opts['version'];
 $allowed_versions = $cli->getAllowedMagentoVersions();
 
+$argv = $opts->getArgumentValues();
+$argc = (count($argv) > 0 && $argv[0] !== null) ? count($argv) : 0;
+
 foreach ($versions as $version) {
     /** @var $installer_class \Meanbee\Testrig\CommandSet\Magento */
     $installer_class = $allowed_versions[$version];
@@ -19,7 +22,8 @@ foreach ($versions as $version) {
         'project_dir'  => $opts['dir'],
         'db_user'      => $opts['db_user'],
         'db_pass'      => $opts['db_pass'],
-        'sample'       => ($opts['sample']) ? true : false
+        'sample'       => ($opts['sample']) ? true : false,
+        'extensions'   => ($argc > 0) ? $argv : array()
     ));
 
     $installer->run();

@@ -14,7 +14,8 @@ abstract class Magento {
             'project_dir'  => '',
             'db_user'      => 'root',
             'db_pass'      => 'toor',
-            'sample'       => false
+            'sample'       => false,
+            'extensions'   => array()
         ), $options);
 
         foreach ($required_keys as $key) {
@@ -122,6 +123,17 @@ abstract class Magento {
             $db_pass,
             $base_url
         );
+
+        $extensions = $this->_getOpt('extensions');
+        if (count($extensions) > 0) {
+            $commands[] = new \Meanbee\Testrig\Command\Raw("cd $project_directory && modman init", "Initialising modman");
+
+            foreach ($extensions as $extension) {
+                $commands[] = new \Meanbee\Testrig\Command\Raw("cd $project_directory && modman clone $extension", "Cloning $extension");
+            }
+
+            $commands[] = new \Meanbee\Testrig\Command\Raw("cd $project_directory && modman deploy-all", "Cloning $extension");
+        }
 
         return $commands;
     }
