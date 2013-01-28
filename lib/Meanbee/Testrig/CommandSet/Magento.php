@@ -95,9 +95,12 @@ abstract class Magento {
             new \Meanbee\Testrig\Command\Raw("rmdir $project_temp_directory/magento $project_temp_directory", "Removing empty temporary directory"),
 
             new \Meanbee\Testrig\Command\MakeDB($db_name, $db_user, $db_pass),
-
-            new \Meanbee\Testrig\Command\Raw("php -f $project_directory/install.php > /dev/null", "Touching install script (no idea why we need to do this)"),
         );
+
+        $touch_install_script = new \Meanbee\Testrig\Command\Raw("php -f $project_directory/install.php > /dev/null", "Touching install script (no idea why we need to do this)");
+        $touch_install_script->setSuppressErrors(true);
+
+        $commands[] = $touch_install_script;
 
         if ($this->_getOpt('sample')) {
             $temporary_sample_file = sprintf("%s/sample.tar.gz", $temporary_directory);

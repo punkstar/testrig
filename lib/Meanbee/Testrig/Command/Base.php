@@ -9,6 +9,9 @@ abstract class Base {
     /** @var \Colors\Color */
     protected $_c = null;
 
+    /** @var bool */
+    protected $_suppress_errors = false;
+
     abstract public function getDescription();
     abstract public function getCommand();
 
@@ -50,6 +53,13 @@ abstract class Base {
         echo $colour(sprintf("%s\n", $text))->error;
     }
 
+    /**
+     * @param bool $flag
+     */
+    public function setSuppressErrors($flag) {
+        $this->_suppress_errors = $flag;
+    }
+
     public function run() {
         $this->_argv = func_get_args();
         $this->_argc = func_num_args();
@@ -63,7 +73,7 @@ abstract class Base {
         $exit_status = 0;
         exec($command, $exit_content, $exit_status);
 
-        if ($exit_status != 0) {
+        if ($exit_status != 0 && !$this->_suppress_errors) {
             $this->printError("Warning, exited with a non-zero status: $exit_status\n");
 
             if (count($exit_content > 0)) {
