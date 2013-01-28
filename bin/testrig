@@ -8,7 +8,6 @@ if (!$autoloadPath) { // If inside of vendor dir
 
 require $autoloadPath;
 
-
 $cli = new \Meanbee\Testrig\Cli();
 
 $opts = $cli->getOptions();
