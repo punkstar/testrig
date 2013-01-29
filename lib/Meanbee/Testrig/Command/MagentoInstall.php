@@ -8,6 +8,8 @@ class MagentoInstall extends Base {
     public function __construct($directory, $db_name, $db_user, $db_pass, $base_url, $description = null) {
         parent::__construct();
 
+        $base_url = preg_replace('#/$#', '', $base_url);
+
         $this->_directory = $directory;
         $this->_dbname = $db_name;
         $this->_dbuser = $db_user;
@@ -37,12 +39,12 @@ class MagentoInstall extends Base {
             'db_pass' => $this->_dbpass,
             'url' => $this->_baseurl,
             'secure_base_url' => $this->_baseurl,
-            'use_rewrites' => 0,
+            'use_rewrites' => 1,
             'use_secure' => 0,
             'use_secure_admin' => 1,
             'admin_firstname' => 'Nick',
             'admin_lastname' => 'Jones',
-            'admin_email' => 'nick.jones@meanbee.com',
+            'admin_email' => 'admin@localhost.com',
             'admin_username' => 'admin',
             'admin_password' => 'password1'
         );

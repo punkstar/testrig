@@ -15,14 +15,24 @@ Testrig is a tool for quickly setting up, potentially, multiple versions of Mage
 
 * PHP version 5.3.0+
 
-#### Composer
-
-    composer install meanbee/testrig
-
 #### GIT
 
-    git clone https://github.com/punkstar/testrig.git ~/testrig
-    alias testrig=~/testrig/bin/testrig
+The most common way, I'd imagine, of people installing `testrig` is by cloning a local copy.
+
+    git clone -b master https://github.com/punkstar/testrig.git ~/testrig
+    cd ~/testrig
+    composer install
+    echo "alias testrig=~/testrig/bin/testrig" >> ~/.zshrc
+
+#### Composer
+
+If you'd like to install `testrig` as a dependency of your project, then:
+
+    {
+        "require": {
+            "meanbee/testrig": "*"
+        }
+    }
 
 ### Using testrig
 
@@ -52,10 +62,18 @@ The follow incantation will set up three Magento installations (1.5, 1.6 and 1.7
 
 The `~/Sites/test/royalmail` directory will contain three directories after this command, each with a different version of Magento fully setup and configured.
 
-
 #### Optional Parameters
 
 * `--sample`: Install sample data
+
+### Testing
+
+Unit tests are held in the `tests/` directory and are written with `phpunit`.  To run all tests, run `phpunit` from the root directory.
+
+Current build status:
+
+* [![Build Status](https://travis-ci.org/punkstar/testrig.png?branch=master)](https://travis-ci.org/punkstar/testrig) [master](https://github.com/punkstar/testrig/tree/master)
+* [![Build Status](https://travis-ci.org/punkstar/testrig.png?branch=develop)](https://travis-ci.org/punkstar/testrig) [develop](https://github.com/punkstar/testrig/tree/develop)
 
 ### License
 

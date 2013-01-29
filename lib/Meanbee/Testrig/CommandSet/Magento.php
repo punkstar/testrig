@@ -29,6 +29,10 @@ abstract class Magento {
         return str_replace(".", "_", $this->getVersion());
     }
 
+    public function setOpt($key, $value) {
+        $this->_options[$key] = $value;
+    }
+
     protected function _getOpt($key) {
         if (isset($this->_options[$key])) {
             return $this->_options[$key];
@@ -60,7 +64,14 @@ abstract class Magento {
     }
 
     public function getBaseUrl() {
-        return $this->_getOpt('base_url') . '/' . $this->_getCleanVersion();
+        $url = $this->_getOpt('base_url');
+
+        // Ensure that our URL has a trailing slash
+        if (substr($url, -1) != '/') {
+            $url = "$url/";
+        }
+
+        return $url . $this->_getCleanVersion();
     }
 
     public function getUrl() {
@@ -95,9 +106,12 @@ abstract class Magento {
             new \Meanbee\Testrig\Command\Raw("rmdir $project_temp_directory/magento $project_temp_directory", "Removing empty temporary directory"),
 
             new \Meanbee\Testrig\Command\MakeDB($db_name, $db_user, $db_pass),
-
-            new \Meanbee\Testrig\Command\Raw("php -f $project_directory/install.php > /dev/null", "Touching install script (no idea why we need to do this)"),
         );
+
+        $touch_install_script = new \Meanbee\Testrig\Command\Raw("php -f $project_directory/install.php > /dev/null", "Touching install script (no idea why we need to do this)");
+        $touch_install_script->setSuppressErrors(true);
+
+        $commands[] = $touch_install_script;
 
         if ($this->_getOpt('sample')) {
             $temporary_sample_file = sprintf("%s/sample.tar.gz", $temporary_directory);
