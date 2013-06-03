@@ -39,17 +39,18 @@ Supported Magento versions: $supported_versions");
             ->aka('u')
             ->describedAs('Project directory');
 
+        $allowedVersions = $this->getAllowedMagentoVersions();
         $opts->option('version')
             ->required()
             ->aka('v')
             ->describedAs('Magento version to install (comma-separate multiple versions)')
-            ->must(function ($version_string) {
+            ->must(function ($version_string) use ($allowedVersions) {
                 $versions = explode(',', $version_string);
 
                 foreach ($versions as $version) {
                     $version = trim($version);
 
-                    if (!in_array($version, array_keys($this->getAllowedMagentoVersions()))) {
+                    if (!in_array($version, array_keys($allowedVersions))) {
                         return false;
                     }
                 }
